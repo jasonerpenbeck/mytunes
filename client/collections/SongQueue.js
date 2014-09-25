@@ -2,21 +2,23 @@
 var SongQueue = Songs.extend({
 
   initialize: function(){
-    this.on('add',function() {
+    this.on('add remove',function() {
+
+
       console.log('Length of songQueue: ',this.length);
+    return this.length;
     });
   },
 
   playFirst: function() {
     console.log('Run playFirst');
-
-    // if this.length > 0
-      // set currentSong to songQueue[0] -> this.model.set('currentSong',songQueue[0])
-      // play songQueue[0]
-    // else
-      // do nothing
-
+    console.log(this.at(0));
+    this.at(0).play();
   }
+
+
+
+
 
 
 });

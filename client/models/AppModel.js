@@ -12,22 +12,45 @@ var AppModel = Backbone.Model.extend({
     end up refering to the window. That's just what happens with all JS events. The handlers end up
     getting called from the window (unless we override it, as we do here). */
 
-/*     console.log(params); */
-
     // set whatever song is being played to currentSong
     params.library.on('play', function(song){
-      this.set('currentSong', song);
-      this.get('songQueue',song).push(song);
+      console.log('play method invoked on: ', song.attributes.title);
+      this.set('currentSong',song);
     }, this);
 
     params.library.on('enqueue', function(song){
       this.get('songQueue',song).add(song);
+      console.log('Adding to queue: ', song.attributes.title);
+
+      if(this.get('songQueue').length === 1) {
+        this.get('songQueue').playFirst();
+      }
     }, this);
 
     params.library.on('dequeue', function(song){
-      console.log(this.get('songQueue'));
+
+      console.log('Removing from queue: ', song.attributes.title);
       this.get('songQueue').remove(song);
+      console.log('Song Removed');
+
+      if(this.get('currentSong',song) === song) {
+        console.log('Song Match');
+        this.get('songQueue').playFirst();
+      }
+
     }, this);
+
+    params.library.on('songOver', function(song) {
+      console.log(song.attributes.title, ' has finished playing');
+
+      this.get('songQueue').remove(song);
+      console.log(this.get('songQueue').length);
+/*       this.set('currentSong',this.get('songQueue').at(0)); */
+
+      if(this.get('songQueue').length > 0) {
+        this.get('songQueue').playFirst();
+        }
+      }, this);
 
   }
 
