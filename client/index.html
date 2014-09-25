@@ -13,7 +13,8 @@
     <script src="collections/Songs.js"></script>
     <script src="collections/SongQueue.js"></script>
     <script src="models/AppModel.js"></script>
-
+    <script src="views/SongQueueView.js"></script>
+    <script src="views/SongQueueEntryView.js"></script>
     <script src="views/PlayerView.js"></script>
     <script src="views/LibraryView.js"></script>
     <script src="views/LibraryEntryView.js"></script>
@@ -22,13 +23,17 @@
     <script>
       $(function(){
         // set up model objects
-        var library = new Songs(songData);
-        var app = new AppModel({library: library});
 
+        // library is an instance of the Songs Collection using songData (the array of songs)
+        var library = new Songs(songData);
+/*         console.log(library); */
+        // app is an instance of the AppModel Model
+        var app = new AppModel({library: library});
+/*         console.log(app); */
         // build a view for the top level of the whole app
         var appView = new AppView({model: app});
 
-        // put the view onto the screen
+        // put the view onto the screeno
         $('body').append(appView.render());
       });
     </script>

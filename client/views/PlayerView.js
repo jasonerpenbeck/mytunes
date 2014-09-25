@@ -8,6 +8,12 @@ var PlayerView = Backbone.View.extend({
   initialize: function() {
   },
 
+  events: {
+     'ended': function() {
+        this.songOver();
+      }
+  },
+
   setSong: function(song){
     this.model = song;
     this.render();
@@ -15,6 +21,16 @@ var PlayerView = Backbone.View.extend({
 
   render: function(){
     return this.$el.attr('src', this.model ? this.model.get('url') : '');
+  },
+
+  songOver: function() {
+    console.log('SONG OVER');
+    this.model.dequeue();
+    // this.model.playFirst();
+      // should currentSong be set within playFirst?
+
+
   }
+  // fire event when a song has ended, remove it from queue in SongQueue
 
 });
